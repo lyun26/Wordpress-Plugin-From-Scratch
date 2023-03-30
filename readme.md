@@ -47,3 +47,34 @@
         if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
             require_once dirname( __FILE__ ) . '/vendor/autoload.php';
         }
+
+## Add Admin Menu
+    add_action( 'admin_menu', array( $this, 'add_admin_pages' ) );
+    add_menu_page( 'Alecaddd Plugin', 'Alecaddd', 'manage_options', 'alecaddd_plugin', array( $this, 'admin_index' ), 'dashicons-store', 110 );
+
+    public function admin_index() {
+		require_once PLUGIN_PATH . 'templates/admin.php';
+	}
+
+    // add subpage
+    add_submenu_page( $page['parent_slug'], $page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['callback'] );
+
+## Register Admin Custom Fields
+    1. register settings  --  encapsulate the fields
+    register_setting( $setting["option_group"], $setting["option_name"], ( isset( $setting["callback"] ) ? $setting["callback"] : '' ) );
+
+    2. add settings section -- print settings registered with callback what we are gonna print.
+    add_settings_section( $section["id"], $section["title"], ( isset( $section["callback"] ) ? $section["callback"] : '' ), $section["page"] );
+
+    3. add fields
+    add_settings_field( $field["id"], $field["title"], ( isset( $field["callback"] ) ? $field["callback"] : '' ), $field["page"], $field["section"], ( isset( $field["args"] ) ? $field["args"] : '' ) );
+
+    Insert the below into page template
+    <?php settings_errors(); ?>
+	<form method="post" action="options.php">
+		<?php 
+			settings_fields( 'alecaddd_options_group' );
+			do_settings_sections( 'alecaddd_plugin' );
+			submit_button();
+		?>
+	</form>
