@@ -69,6 +69,19 @@
     3. add fields
     add_settings_field( $field["id"], $field["title"], ( isset( $field["callback"] ) ? $field["callback"] : '' ), $field["page"], $field["section"], ( isset( $field["args"] ) ? $field["args"] : '' ) );
 
+    -- Fields Callback
+    public function alecadddTextExample()
+	{
+		$value = esc_attr( get_option( 'text_example' ) );
+		echo '<input type="text" class="regular-text" name="text_example" value="' . $value . '" placeholder="Write Something Here!">';
+	}
+
+	public function alecadddFirstName()
+	{
+		$value = esc_attr( get_option( 'first_name' ) );
+		echo '<input type="text" class="regular-text" name="first_name" value="' . $value . '" placeholder="Write your First Name">';
+	}
+
     Insert the below into page template
     <?php settings_errors(); ?>
 	<form method="post" action="options.php">
@@ -78,3 +91,5 @@
 			submit_button();
 		?>
 	</form>
+
+
